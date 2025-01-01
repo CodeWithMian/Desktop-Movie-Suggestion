@@ -13,7 +13,7 @@ export const fetchMovies = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}`
+        `https://api.themoviedb.org/3/movie/popular?api_key=3c7455dd240c14269de6fc94fae19085`
       );
       return response.data.results; // Assuming `results` contains the array of movies
     } catch (error) {
