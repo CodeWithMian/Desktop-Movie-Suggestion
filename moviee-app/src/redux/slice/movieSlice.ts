@@ -1,25 +1,21 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios"; // Import axios
+// /src/redux/slice/movieSlice.ts
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { Movie, MovieState } from "../../types/types";
 
-const initialState = {
+const initialState: MovieState = {
   movies: [],
   loading: false,
   error: null,
 };
 
-// Async thunk for fetching movies using axios
-export const fetchMovies = createAsyncThunk(
+export const fetchMovies = createAsyncThunk<Movie[]>(
   "movies/fetchMovies",
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=3c7455dd240c14269de6fc94fae19085`
-      );
-      return response.data.results; // Assuming `results` contains the array of movies
-    } catch (error) {
-      // Handle the error properly by checking for different types of errors
-      return rejectWithValue(error.response ? error.response.data : error.message);
-    }
+  async () => {
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}`
+    );
+    return response.data.results;
   }
 );
 
@@ -39,7 +35,7 @@ const movieSlice = createSlice({
       })
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.error.message || "Failed to fetch movies";
       });
   },
 });
