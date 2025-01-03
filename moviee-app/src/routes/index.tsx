@@ -1,7 +1,7 @@
 // /src/routes/index.tsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import MoviesList from "../page/home/movieList";
+import MoviesList from "../page/home/moviesList";
 import MovieDetail from "../page/details/movieDetails";
 
 const AppRoutes = () => {

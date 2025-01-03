@@ -1,12 +1,11 @@
 // /src/redux/slice/movieSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Movie, MovieState } from "../../types/types";
+import { Movie } from "../../types/types";
 
-const initialState: MovieState = {
-  movies: [],
+const initialState = {
+  movies: [] as Movie[],
   loading: false,
-  error: null,
 };
 
 export const fetchMovies = createAsyncThunk<Movie[]>(
@@ -27,15 +26,13 @@ const movieSlice = createSlice({
     builder
       .addCase(fetchMovies.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = false;
         state.movies = action.payload;
       })
-      .addCase(fetchMovies.rejected, (state, action) => {
+      .addCase(fetchMovies.rejected, (state) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to fetch movies";
       });
   },
 });

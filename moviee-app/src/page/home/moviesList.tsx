@@ -1,7 +1,7 @@
 // /src/components/MoviesList.tsx
-import React from "react";
 import { Link } from "react-router-dom";
 import useMovies from "../../hooks/useMovies";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 const MoviesList = () => {
   const { movies, loading, error } = useMovies();
@@ -11,6 +11,7 @@ const MoviesList = () => {
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+      <SearchBar/>
       {movies.map((movie) => (
         <div key={movie.id} style={{ textAlign: "center" }}>
           <Link to={`/movie/${movie.id}`}>

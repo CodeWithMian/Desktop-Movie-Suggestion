@@ -1,5 +1,5 @@
 // /src/components/MovieDetail.tsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Movie } from "../../types/types";
@@ -19,7 +19,7 @@ const MovieDetail = () => {
         );
         setMovie(response.data);
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Failed to fetch movie details");
         setLoading(false);
       }

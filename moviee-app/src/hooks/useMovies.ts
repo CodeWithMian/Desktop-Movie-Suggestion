@@ -1,7 +1,6 @@
-// /src/hooks/useMovies.ts
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { Movie } from "../types/types"; // Import Movie type
+import axiosInstance from "../constants/instance";
+import { Movie } from "../types/types";
 
 const useMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -10,12 +9,10 @@ const useMovies = () => {
 
   const fetchMovies = async () => {
     try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}`
-      );
+      const response = await axiosInstance.get("/movie/popular");
       setMovies(response.data.results);
       setLoading(false);
-    } catch (err) {
+    } catch {
       setError("Failed to fetch movies");
       setLoading(false);
     }
@@ -24,12 +21,12 @@ const useMovies = () => {
   const handleSearch = async (query: string) => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_API_KEY}&query=${query}`
-      );
+      const response = await axiosInstance.get("/search/movie", {
+        params: { query },
+      });
       setMovies(response.data.results);
       setLoading(false);
-    } catch (err) {
+    } catch {
       setError("Failed to fetch movies");
       setLoading(false);
     }
